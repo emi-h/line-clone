@@ -1,5 +1,5 @@
 import { SignOut } from "./SignOut"
-import { database } from "../firebase"
+import { auth, database } from "../firebase"
 import { useEffect, useState } from "react"
 import { collection, query, getDocs, orderBy, limit } from "firebase/firestore";
 import { SendMessage } from "./SendMessage";
@@ -24,20 +24,22 @@ export const Line =()=>{
             // });
       }
 
-      // マウント時のみ実行
+      // マウント時のみ実行：データ更新時に第二引数が必要
       useEffect(()=>{
             getData();
+            console.log(messages)
       },[])
 
       return(
             <div>
             <SignOut />
             <div className="msgs">
-                  {messages.map(({id,text,photoURL})=>(
-                        <div key={id}>
-                              <img src={photoURL} alt="" />
-                              <p>{text}</p>
-                              <p>{id}</p>
+                  {messages.map(({id,text,photoURL,uid})=>(
+                        <div key={id} >
+                              <div className={`msg ${uid === auth.currentUser.uid ? "sent" : "received"}`}>
+                                    <img src={photoURL} alt="" />
+                                    <p>{text}</p>
+                              </div>
                         </div>
                   ))}
             </div>

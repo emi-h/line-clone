@@ -2,6 +2,7 @@ import { useState } from "react"
 import { serverTimestamp,addDoc,collection } from "firebase/firestore";
 import { auth, database } from "../firebase";
 import SendIcon from '@mui/icons-material/Send';
+import { v4 as uuidv4 } from 'uuid';
 
 export const SendMessage =()=>{
       const [message ,setMessage]=useState();
@@ -12,6 +13,7 @@ export const SendMessage =()=>{
             // データ追加
             try {
                   const docRef = await addDoc(collection(database, "messages"), {
+                  //   id:uuidv4(),
                     text:message,
                     photoURL,
                     uid,
