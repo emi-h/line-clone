@@ -2,22 +2,26 @@ import { useState } from "react"
 import { serverTimestamp,addDoc,collection } from "firebase/firestore";
 import { auth, database } from "../firebase";
 import SendIcon from '@mui/icons-material/Send';
-export const SendMessage =()=>{
-      const [message ,setMessage]=useState();
-      const sendMessage = async(e)=>{
-            e.preventDefault();
 
+export const SendMessage =()=>{
+      const[text,setText]=useState("")
+      const handleChange=(e)=>{
+            setText(e.target.value)
+      }
+      const handleSendMessage = async(e)=>{
+            e.preventDefault();
+            //現在ログインしているユーザーの情報を取得
             const{uid,photoURL}= auth.currentUser;
             // データ追加
             try {
                   const docRef = await addDoc(collection(database, "messages"), {
-                    text:message,
+                    text,
                     photoURL,
                     uid,
                     // Ref:https://stackoverflow.com/questions/69519447/how-to-get-server-timestamp-from-firebase-v9
                     createdAt:serverTimestamp(),
                   });
-                  setMessage("");
+                  setText("");
                   console.log("Document written with ID: ", docRef.id);
                 } catch (e) {
                   console.error("Error adding document: ", e);
@@ -26,7 +30,7 @@ export const SendMessage =()=>{
 
       return (
             <div>
-                  <form onSubmit={sendMessage}>
+                  <form onSubmit={handleSendMessage}>
                         <div className="sendMsg">
                               <input
                               style={{
@@ -35,9 +39,14 @@ export const SendMessage =()=>{
                                     fontWeight: "550",
                                     marginLeft: "5px",
                                     marginBottom: "-3px",
+                                    padding:"10px",
+                                    borderColor:"#aaa"
                                   }}
-                              placeholder="メッセージを入力してください" type="text" onChange={(e)=> setMessage(e.target.value)} value={message}/>
-                              <SendIcon style={{ color: "#7AC2FF", marginLeft: "20px" }} />
+                              placeholder="メッセージを入力してください" type="text" onChange={handleChange} value={text}/>
+                              <button style={{
+                                    backgroundColor:"transparent",
+                                    borderColor:"transparent"
+                                  }}><SendIcon style={{ color: "#7AC2FF", marginLeft: "20px" }} /></button>
                         </div>
                   </form>
             </div>

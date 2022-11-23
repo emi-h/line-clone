@@ -10,10 +10,10 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId: "line-clone-92dff",
-  storageBucket: "line-clone-92dff.appspot.com",
-  messagingSenderId: "1034751671440",
-  appId: "1:1034751671440:web:c9fe4fa6447404afcd6c15"
+  projectId: "line-clone2-c341e",
+  storageBucket: "line-clone2-c341e.appspot.com",
+  messagingSenderId: "281714841625",
+  appId: "1:281714841625:web:bafb81e111facfed71f288"
 };
 
 // Initialize Firebase
@@ -25,4 +25,4 @@ export const provider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 
 // Initialize Realtime Database and get a reference to the service
-export const database = getFirestore(app);
+export const database = getFirestore();
