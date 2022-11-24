@@ -1,17 +1,19 @@
-import { useState } from "react"
+import { FC, useState } from "react"
 import { serverTimestamp,addDoc,collection } from "firebase/firestore";
 import { auth, database } from "../firebase";
 import SendIcon from '@mui/icons-material/Send';
+import React from "react"
 
-export const SendMessage =()=>{
+export const SendMessage:FC =()=>{
       const[text,setText]=useState("")
-      const handleChange=(e)=>{
+      const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
             setText(e.target.value)
       }
-      const handleSendMessage = async(e)=>{
+      const handleSendMessage = async(e: React.FormEvent<HTMLFormElement>)=>{
             e.preventDefault();
             //現在ログインしているユーザーの情報を取得
-            const{uid,photoURL}= auth.currentUser;
+            const uid = auth.currentUser?.uid;
+            const photoURL =auth.currentUser?.photoURL;
             // データ追加
             try {
                   const docRef = await addDoc(collection(database, "messages"), {
