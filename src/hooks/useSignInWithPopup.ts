@@ -1,5 +1,5 @@
 import { auth, provider } from "../firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 
 export const useSignInWithPopup =()=>{
       signInWithPopup(auth, provider)
@@ -18,7 +18,7 @@ export const useSignInWithPopup =()=>{
         // The email of the user's account used.
         // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential:OAuthCredential | null = GoogleAuthProvider.credentialFromError(error);
         alert(`エラーコード:${errorCode}、エラーメッセージ：${errorMessage}`)
       });
 }
